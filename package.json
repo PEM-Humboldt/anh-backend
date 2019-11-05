@@ -1,0 +1,35 @@
+{
+  "name": "anh-backend",
+  "version": "1.0.0",
+  "description": "Backend for ANH dashboard",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "npx nodemon --watch src --watch config",
+    "start-prod": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint src",
+    "gen_docs": "npx apidoc -i src/ -o docs/"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "apidoc": "^0.17.7",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PEM-Humboldt/anh-backend.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/PEM-Humboldt/anh-backend/issues"
+  },
+  "homepage": "https://github.com/PEM-Humboldt/anh-backend#readme",
+  "apidoc": {
+    "name": "ANH REST API",
+    "version": "1.0.0"
+  }
+}
