@@ -11,7 +11,13 @@
     "gen_docs": "npx apidoc -i src/ -o docs/"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "bottlejs": "^1.7.2",
+    "config": "^3.2.4",
+    "restify": "^8.4.0",
+    "restify-cors-middleware": "^1.1.1",
+    "winston": "^3.2.1"
+  },
   "devDependencies": {
     "apidoc": "^0.17.7",
     "eslint": "^6.6.0",
