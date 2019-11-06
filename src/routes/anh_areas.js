@@ -1,0 +1,44 @@
+const { Router } = require('restify-router');
+
+/**
+ * @apiDefine anh_areas Anh Areas
+ * Endpoints to get anh areas information
+ */
+
+module.exports = (errorHandler, anhAreasService) => {
+  const router = new Router();
+
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id get Area Info
+   * @apiName getAreaInfo
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get an area information
+   *
+   * @apiParam {String} id area id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {Number} result.area total area in hectares
+   * @apiSuccess {String} result.description description about the area
+   * @apiSuccess {Object[]} result.categories presence or absence of special areas inside the area
+   * @apiSuccess {Boolean} result.protected_area if the given area has protected areas
+   * @apiSuccess {Boolean} result.forest_reserves if the given area has forest reserves
+   * @apiSuccess {Boolean} result.strategic_ecosystem if the given area has strategic ecosystem
+   * @apiSuccess {Boolean} result.ethnic_territories if the given area has ethnic territories
+   * @apiSuccess {Boolean} result.peasant_reserves if the given area has peasant reserves
+   * @apiSuccess {Boolean} result.projects if the given area has projects
+   * @apiSuccess {Boolean} result.ordering if the given area has ordering
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96
+   */
+  router.get('/anh_areas/:id', errorHandler((req, res, next) => (
+    anhAreasService.getAreaInfo(req.params.id)
+      .then((areaInfo) => {
+        res.send(areaInfo);
+        next();
+      })
+  )));
+  return router;
+};
