@@ -40,5 +40,29 @@ module.exports = (errorHandler, anhAreasService) => {
         next();
       })
   )));
+
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/geometry get Area geometry
+   * @apiName getAreaGeometry
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get the geometry associated to an area
+   *
+   * @apiParam {String} id area id
+   *
+   * @apiSuccess {Object} result GeoJSON object with the area geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/geometry
+   */
+  router.get('/anh_areas/:id/geometry', errorHandler((req, res, next) => (
+    anhAreasService.getAreaGeometry(req.params.id)
+      .then((areaGeometry) => {
+        res.send(areaGeometry);
+        next();
+      })
+  )));
+
   return router;
 };
