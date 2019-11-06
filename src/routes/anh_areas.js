@@ -64,5 +64,28 @@ module.exports = (errorHandler, anhAreasService) => {
       })
   )));
 
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/indicators get Area associated indicators
+   * @apiName getAreaIndicators
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get the list of indicators associated to an area
+   *
+   * @apiParam {String} id area id
+   *
+   * @apiSuccess {Object[]} result Array with indicators objects
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/indicators
+   */
+  router.get('/anh_areas/:id/indicators', errorHandler((req, res, next) => (
+    anhAreasService.getAreaIndicators(req.params.id)
+      .then((areaIndicators) => {
+        res.send(areaIndicators);
+        next();
+      })
+  )));
+
   return router;
 };
