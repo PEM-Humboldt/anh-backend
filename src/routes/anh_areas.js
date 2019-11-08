@@ -24,8 +24,10 @@ module.exports = (errorHandler, anhAreasService) => {
    * @apiSuccess {Object[]} result.categories presence or absence of special areas inside the area
    * @apiSuccess {Boolean} result.categories.protected_area if the given area has protected areas
    * @apiSuccess {Boolean} result.categories.forest_reserves if the given area has forest reserves
-   * @apiSuccess {Boolean} result.categories.strategic_ecosystem if the given area has strategic ecosystem
-   * @apiSuccess {Boolean} result.categories.ethnic_territories if the given area has ethnic territories
+   * @apiSuccess {Boolean} result.categories.strategic_ecosystem if the given area has strategic
+   * ecosystems inside
+   * @apiSuccess {Boolean} result.categories.ethnic_territories if the given area has ethnic
+   * territories inside
    * @apiSuccess {Boolean} result.categories.peasant_reserves if the given area has peasant reserves
    * @apiSuccess {Boolean} result.categories.projects if the given area has projects
    * @apiSuccess {Boolean} result.categories.ordering if the given area has ordering
