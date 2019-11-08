@@ -18,9 +18,13 @@ const knexClient = knex({
 const connection = bookshelf(knexClient);
 
 const geoBiomesByBlocks = connection.model('geoBiomesByBlocks', {
-  tableName: 'geo_biomes_by_blocks',
+  tableName: 'anh.geo_biomes_by_blocks',
+});
+const geoSedimentaryBasins = connection.model('geoSedimentaryBasins', {
+  tableName: 'anh.geo_sedimentary_basins',
 });
 
 module.exports = {
   geoBiomesByBlocks,
+  geoSedimentaryBasins,
 };
