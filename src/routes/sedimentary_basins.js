@@ -24,7 +24,7 @@ module.exports = (errorHandler, sedimentaryBasinsService) => {
    *  /sedimentary_basins
    */
   router.get('/sedimentary_basins', errorHandler((req, res, next) => (
-    sedimentaryBasinsService.listAllBasicInfo(req.params.id)
+    sedimentaryBasinsService.listAllBasicInfo()
       .then((basins) => {
         res.send(basins);
         next();
