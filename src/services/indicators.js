@@ -5,7 +5,7 @@ module.exports = () => ({
    *
    * @param {string} typeId area id
    */
-  getAreaInfo: async (typeId) => ({
+  getMetadata: async (typeId) => ({
     id: typeId,
     name: 'test Indicator name',
     is_geographic: false,

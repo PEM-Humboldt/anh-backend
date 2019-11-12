@@ -9,9 +9,11 @@ const geoSedimentaryBasinsPersistence = require('../persistence/geo_sedimentary_
 
 const anhAreasService = require('../services/anh_areas');
 const sedimentaryBasinsService = require('../services/sedimentary_basins');
+const indicatorsService = require('../services/indicators');
 
 const anhAreasRoute = require('../routes/anh_areas');
 const sedimentaryBasinsRoute = require('../routes/sedimentary_basins');
+const indicatorsRoute = require('../routes/indicators');
 
 const bottle = new Bottlejs();
 
@@ -27,10 +29,12 @@ bottle.factory('anhAreasService', (container) => (
 bottle.factory('sedimentaryBasinsService', (container) => (
   sedimentaryBasinsService(container.geoSedimentaryBasinsPersistence)
 ));
+bottle.factory('indicatorsService', () => indicatorsService());
 
 bottle.factory('routes', (container) => ([
   anhAreasRoute(container.errorHandler, container.anhAreasService),
   sedimentaryBasinsRoute(container.errorHandler, container.sedimentaryBasinsService),
+  indicatorsRoute(container.errorHandler, container.indicatorsService),
 ]));
 
 
