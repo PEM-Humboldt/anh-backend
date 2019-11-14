@@ -10,7 +10,7 @@ module.exports = (errorHandler, sedimentaryBasinsService) => {
 
   /**
    * @apiGroup sedimentary_basins
-   * @api {get} /sedimentary_basins List all basic info
+   * @api {get} /sedimentary_basins List basic info
    * @apiName listAllSB
    * @apiVersion 1.0.0
    * @apiDescription
