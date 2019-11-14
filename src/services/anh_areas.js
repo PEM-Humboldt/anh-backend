@@ -1,4 +1,9 @@
-module.exports = () => ({
+module.exports = (geoBiomesByBlocks) => ({
+
+  /**
+   * Get all anh areas basic information: name
+   */
+  listAllBasicInfo: async () => geoBiomesByBlocks.listAllBlocksWithName(),
 
   /**
    * Get information about a given area

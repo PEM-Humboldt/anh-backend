@@ -10,6 +10,29 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
+   * @api {get} /anh_areas List all basic info
+   * @apiName listAllAnhAreas
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * List all anh areas basic information: name.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.name area name
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas
+   * @apiUse listAllAnhAreasSE
+   */
+  router.get('/anh_areas', errorHandler((req, res, next) => (
+    anhAreasService.listAllBasicInfo()
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup anh_areas
    * @api {get} /anh_areas/:id get area Info
    * @apiName getAreaInfo
    * @apiVersion 1.0.0
