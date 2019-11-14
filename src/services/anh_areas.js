@@ -138,4 +138,14 @@ module.exports = (geoBiomesByBlocks) => ({
       values: [7, 4],
     },
   ]),
+
+  /**
+   * List biomes information inside an area that have indicators
+   *
+   * @param {Number} id area id
+   */
+  listAreaIndicatorsBiomes: async () => ([
+    { id: 1, name: 'Zoonobioma1'},
+    { id: 2, name: 'Zoonobioma2'},
+  ])
 });
