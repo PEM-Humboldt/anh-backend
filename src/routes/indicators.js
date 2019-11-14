@@ -10,7 +10,7 @@ module.exports = (errorHandler, indicatorsService) => {
 
   /**
    * @apiGroup indicators
-   * @api {get} /indicators/:type_id/metadata get indicator metadata
+   * @api {get} /indicators/:type_id/metadata get metadata
    * @apiName getIndicatorMetadata
    * @apiVersion 1.0.0
    * @apiDescription

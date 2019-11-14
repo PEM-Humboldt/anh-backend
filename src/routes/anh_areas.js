@@ -10,7 +10,7 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas List all basic info
+   * @api {get} /anh_areas List basic info
    * @apiName listAllAnhAreas
    * @apiVersion 1.0.0
    * @apiDescription
@@ -33,11 +33,11 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id get area Info
+   * @api {get} /anh_areas/:id get complete Info
    * @apiName getAreaInfo
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get an area information
+   * Get an anh area general information
    *
    * @apiParam {String} id area id
    *
@@ -68,21 +68,21 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/geometry get area geometry
-   * @apiName getAreaGeometry
+   * @api {get} /anh_areas/:id/biomes/geometry get geometry with biomes
+   * @apiName getAreaGeometryWithBiomes
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get the geometry associated to an area
+   * Get an anh area geometry divided by biomes
    *
    * @apiParam {String} id area id
    *
    * @apiSuccess {Object} result GeoJSON object with the area geometry
    *
    * @apiExample {curl} Example usage:
-   *  /anh_areas/LLA 96/geometry
+   *  /anh_areas/LLA 96/biomes/geometry
    */
-  router.get('/anh_areas/:id/geometry', errorHandler((req, res, next) => (
-    anhAreasService.getAreaGeometry(req.params.id)
+  router.get('/anh_areas/:id/biomes/geometry', errorHandler((req, res, next) => (
+    anhAreasService.getAreaGeometryWithBiomes(req.params.id)
       .then((areaGeometry) => {
         res.send(areaGeometry);
         next();
@@ -91,11 +91,11 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/biomes get biomes inside the area
+   * @api {get} /anh_areas/:id/biomes get biomes area
    * @apiName getAreaBiomes
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get the biomes inside an area
+   * Get the biomes area and percentage inside an anh area
    *
    * @apiParam {String} id area id
    *
@@ -117,11 +117,11 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/indicators get area associated indicators
+   * @api {get} /anh_areas/:id/indicators get associated indicators
    * @apiName getAreaIndicators
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get the list of indicators associated to an area
+   * Get the list of indicators information associated to an area
    *
    * @apiParam {String} id area id
    *
