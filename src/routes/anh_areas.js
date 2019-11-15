@@ -138,5 +138,30 @@ module.exports = (errorHandler, anhAreasService) => {
       })
   )));
 
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/indicators/biomes get biomes with indicators inside area
+   * @apiName getAreaIndicatorsBiomes
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get the list of biomes inside the anh area with indicators information
+   *
+   * @apiParam {String} id area id
+   *
+   * @apiSuccess {Object[]} result Array with biomes indicators objects
+   * @apiSuccess {Number} result.id biome id
+   * @apiSuccess {String} result.name biome name
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/indicators/biomes
+   */
+  router.get('/anh_areas/:id/indicators/biomes', errorHandler((req, res, next) => (
+    anhAreasService.listAreaIndicatorsBiomes(req.params.id)
+      .then((indicatorsBiomes) => {
+        res.send(indicatorsBiomes);
+        next();
+      })
+  )));
+
   return router;
 };
