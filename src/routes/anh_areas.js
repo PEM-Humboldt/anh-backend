@@ -68,29 +68,6 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/biomes/geometry get geometry with biomes
-   * @apiName getAreaGeometryWithBiomes
-   * @apiVersion 1.0.0
-   * @apiDescription
-   * Get an anh area geometry divided by biomes
-   *
-   * @apiParam {String} id area id
-   *
-   * @apiSuccess {Object} result GeoJSON object with the area geometry
-   *
-   * @apiExample {curl} Example usage:
-   *  /anh_areas/LLA 96/biomes/geometry
-   */
-  router.get('/anh_areas/:id/biomes/geometry', errorHandler((req, res, next) => (
-    anhAreasService.getAreaGeometryWithBiomes(req.params.id)
-      .then((areaGeometry) => {
-        res.send(areaGeometry);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup anh_areas
    * @api {get} /anh_areas/:id/biomes get biomes area
    * @apiName getAreaBiomes
    * @apiVersion 1.0.0
@@ -111,6 +88,29 @@ module.exports = (errorHandler, anhAreasService) => {
     anhAreasService.getAreaBiomes(req.params.id)
       .then((areaBiomes) => {
         res.send(areaBiomes);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/biomes/geometry get geometry with biomes
+   * @apiName getAreaGeometryWithBiomes
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get an anh area geometry divided by biomes
+   *
+   * @apiParam {String} id area id
+   *
+   * @apiSuccess {Object} result GeoJSON object with the area geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/biomes/geometry
+   */
+  router.get('/anh_areas/:id/biomes/geometry', errorHandler((req, res, next) => (
+    anhAreasService.getAreaGeometryWithBiomes(req.params.id)
+      .then((areaGeometry) => {
+        res.send(areaGeometry);
         next();
       })
   )));
