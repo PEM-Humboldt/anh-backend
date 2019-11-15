@@ -186,5 +186,54 @@ module.exports = (errorHandler, anhAreasService) => {
       })
   )));
 
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/indicators/biomes/:id get indicators for biome inside area
+   * @apiName getAreaIndicatorsBiomes
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get the list of indicators related with a biome inside the anh area
+   *
+   * @apiParam {String} id area id
+   * @apiParam {Number} biome_id biome id
+   *
+   * @apiSuccess {Object[]} result Array with indicators objects
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/indicators/biomes/1
+   */
+  router.get('/anh_areas/:id/indicators/biomes/:biome_id', errorHandler((req, res, next) => (
+    anhAreasService.getBiomeIndicatorsInArea(req.params.id, req.params.biome_id)
+      .then((indicators) => {
+        res.send(indicators);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup anh_areas
+   * @api {get} /anh_areas/:id/indicators/:indicator_id/geometry get an indicator geometry
+   * @apiName getAreaIndicatorGeometry
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Get the geometry of an indicator inside an area (if there is one).
+   *
+   * @apiParam {String} id area id
+   * @apiParam {Number} indicator_id indicator id
+   *
+   * @apiSuccess {Object} result GeoJSON object with the area geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /anh_areas/LLA 96/indicators/1/geometry
+   */
+  router.get('/anh_areas/:id/indicators/:indicator_id/geometry', errorHandler((req, res, next) => (
+    anhAreasService.getIndicatorGeometry(req.params.id, req.params.indicator_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+
   return router;
 };
