@@ -10,7 +10,7 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas List basic info
+   * @api {get} /anh_areas list basic info
    * @apiName listAllAnhAreas
    * @apiVersion 1.0.0
    * @apiDescription
@@ -189,7 +189,7 @@ module.exports = (errorHandler, anhAreasService) => {
   /**
    * @apiGroup anh_areas
    * @api {get} /anh_areas/:id/indicators/biomes/:id get indicators for biome inside area
-   * @apiName getAreaIndicatorsBiomes
+   * @apiName getAreaBiomeIndicators
    * @apiVersion 1.0.0
    * @apiDescription
    * Get the list of indicators related with a biome inside the anh area
