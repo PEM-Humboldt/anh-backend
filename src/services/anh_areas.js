@@ -152,8 +152,8 @@ module.exports = (geoBiomesByBlocks) => ({
    * @param {String} id area id
    */
   listAreaIndicatorsBiomes: async () => ([
-    { id: 1, name: 'Zoonobioma1'},
-    { id: 2, name: 'Zoonobioma2'},
+    { id: 1, name: 'Zoonobioma1' },
+    { id: 2, name: 'Zoonobioma2' },
   ]),
 
   /**
