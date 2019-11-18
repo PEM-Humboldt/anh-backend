@@ -22,6 +22,7 @@ module.exports = (errorHandler, sedimentaryBasinsService) => {
    *
    * @apiExample {curl} Example usage:
    *  /sedimentary_basins
+   * @apiUse listAllSBSE
    */
   router.get('/sedimentary_basins', errorHandler((req, res, next) => (
     sedimentaryBasinsService.listAllBasicInfo()

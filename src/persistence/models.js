@@ -24,7 +24,15 @@ const geoSedimentaryBasins = connection.model('geoSedimentaryBasins', {
   tableName: 'anh.geo_sedimentary_basins',
 });
 
-module.exports = {
-  geoBiomesByBlocks,
-  geoSedimentaryBasins,
-};
+const geoSimplifiedBiomes = connection.model('geoSimplifiedBiomes', {
+  tableName: 'anh.geo_simplified_biomes',
+});
+
+module.exports = [
+  {
+    geoBiomesByBlocks,
+    geoSedimentaryBasins,
+    geoSimplifiedBiomes,
+  },
+  connection.knex,
+];
