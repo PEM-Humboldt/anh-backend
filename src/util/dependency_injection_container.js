@@ -23,7 +23,7 @@ const bottle = new Bottlejs();
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 
-bottle.factory('geoBiomesByBlocksPersistence', () => geoBiomesByBlocksPersistence(models));
+bottle.factory('geoBiomesByBlocksPersistence', () => geoBiomesByBlocksPersistence(models, db));
 bottle.factory('geoSedimentaryBasinsPersistence', () => geoSedimentaryBasinsPersistence(models));
 bottle.factory('geoSimplifiedBiomes', () => geoSimplifiedBiomes(models, db));
 
