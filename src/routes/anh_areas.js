@@ -39,7 +39,7 @@ module.exports = (errorHandler, anhAreasService) => {
    * @apiDescription
    * Get an anh area general information
    *
-   * @apiParam {String} id area id
+   * @apiParam {String} name area anh area name
    *
    * @apiSuccess {Object} result
    * @apiSuccess {Number} result.area total area in hectares
@@ -57,6 +57,7 @@ module.exports = (errorHandler, anhAreasService) => {
    *
    * @apiExample {curl} Example usage:
    *  /anh_areas/LLA 96
+   * @apiUse getAreaInfoSE
    */
   router.get('/anh_areas/:id', errorHandler((req, res, next) => (
     anhAreasService.getAreaInfo(req.params.id)
