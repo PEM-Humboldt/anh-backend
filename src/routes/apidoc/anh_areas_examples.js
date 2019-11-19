@@ -80,3 +80,23 @@
     ]
   }
  */
+
+/**
+ * @apiDefine getAreaInfoSE
+ * @apiSuccessExample {json} Success-Example:
+  {
+    "name": "LLA 92",
+    "area": "111329.14364",
+    "sedimentary_code": "LLA",
+    "description": "PROCESO PERMANENTE DE ASIGNACION DE AREAS 2019",
+    "categories": {
+      "protected_area": true,
+      "forest_reserves": null,
+      "strategic_ecosystem": null,
+      "ethnic_territories": null,
+      "peasant_reserves": null,
+      "projects": null,
+      "ordering": null
+    }
+  }
+ */
