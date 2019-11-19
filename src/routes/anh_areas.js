@@ -166,13 +166,13 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/indicators/biomes get biomes with indicators inside area
-   * @apiName getAreaIndicatorsBiomes
+   * @api {get} /anh_areas/:id/indicators/biomes list biomes with indicators inside area
+   * @apiName listAreaIndicatorsBiomes
    * @apiVersion 1.0.0
    * @apiDescription
    * Get the list of biomes inside the anh area with indicators information
    *
-   * @apiParam {String} id area id
+   * @apiParam {String} name anh area name
    *
    * @apiSuccess {Object[]} result Array with biomes indicators objects
    * @apiSuccess {Number} result.id biome id
@@ -180,9 +180,10 @@ module.exports = (errorHandler, anhAreasService) => {
    *
    * @apiExample {curl} Example usage:
    *  /anh_areas/LLA 96/indicators/biomes
+   * @apiUse listAreaIndicatorsBiomesSE
    */
-  router.get('/anh_areas/:id/indicators/biomes', errorHandler((req, res, next) => (
-    anhAreasService.listAreaIndicatorsBiomes(req.params.id)
+  router.get('/anh_areas/:name/indicators/biomes', errorHandler((req, res, next) => (
+    anhAreasService.listAreaIndicatorsBiomes(req.params.name)
       .then((indicatorsBiomes) => {
         res.send(indicatorsBiomes);
         next();

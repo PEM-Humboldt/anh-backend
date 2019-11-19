@@ -23,13 +23,14 @@ const geoBiomesByBlocks = connection.model('geoBiomesByBlocks', {
 const geoSedimentaryBasins = connection.model('geoSedimentaryBasins', {
   tableName: 'anh.geo_sedimentary_basins',
 });
-
 const geoSimplifiedBiomes = connection.model('geoSimplifiedBiomes', {
   tableName: 'anh.geo_simplified_biomes',
 });
-
 const geoBlocks = connection.model('geoBlocks', {
   tableName: 'anh.geo_blocks',
+});
+const geoIndicatorsByBlocks = connection.model('geoIndicatorsByBlocks', {
+  tableName: 'anh.geo_indicators_by_blocks',
 });
 
 module.exports = [
@@ -38,6 +39,7 @@ module.exports = [
     geoSedimentaryBasins,
     geoSimplifiedBiomes,
     geoBlocks,
+    geoIndicatorsByBlocks,
   },
   connection.knex,
 ];
