@@ -8,6 +8,7 @@ const geoBiomesByBlocksPersistence = require('../persistence/geo_biomes_by_block
 const geoSedimentaryBasinsPersistence = require('../persistence/geo_sedimentary_basins');
 const geoSimplifiedBiomesPersistence = require('../persistence/geo_simplified_biomes');
 const geoBlocksPersistence = require('../persistence/geo_blocks');
+const geoIndicatorsByBlocksPersistence = require('../persistence/geo_indicators_by_blocks');
 
 const anhAreasService = require('../services/anh_areas');
 const sedimentaryBasinsService = require('../services/sedimentary_basins');
@@ -28,9 +29,11 @@ bottle.factory('geoBiomesByBlocksPersistence', () => geoBiomesByBlocksPersistenc
 bottle.factory('geoSedimentaryBasinsPersistence', () => geoSedimentaryBasinsPersistence(models));
 bottle.factory('geoSimplifiedBiomesPersistence', () => geoSimplifiedBiomesPersistence(models, db));
 bottle.factory('geoBlocksPersistence', () => geoBlocksPersistence(models, db));
+bottle.factory('geoIndicatorsByBlocksPersistence', () => geoIndicatorsByBlocksPersistence(models));
 
 bottle.factory('anhAreasService', (container) => (
-  anhAreasService(container.geoBiomesByBlocksPersistence, container.geoBlocksPersistence)
+  anhAreasService(container.geoBiomesByBlocksPersistence, container.geoBlocksPersistence,
+    container.geoIndicatorsByBlocksPersistence)
 ));
 bottle.factory('sedimentaryBasinsService', (container) => (
   sedimentaryBasinsService(container.geoSedimentaryBasinsPersistence)

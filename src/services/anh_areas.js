@@ -1,4 +1,4 @@
-module.exports = (geoBiomesByBlocks, geoBlocks) => ({
+module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
 
   /**
    * Get all anh areas basic information: name
@@ -140,12 +140,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks) => ({
   /**
    * List biomes information inside an area that have indicators
    *
-   * @param {String} id area id
+   * @param {String} name anh area name
    */
-  listAreaIndicatorsBiomes: async () => ([
-    { id: 1, name: 'Zoonobioma1' },
-    { id: 2, name: 'Zoonobioma2' },
-  ]),
+  listAreaIndicatorsBiomes: async (name) => (
+    geoIndicatorsByBlocks.findBiomesWithIndicatorsByBlock(name)
+  ),
 
   /**
    * Get the list of indicators associated to a given biome inside a given area

@@ -119,3 +119,18 @@
     }
   ]
  */
+
+/**
+ * @apiDefine listAreaIndicatorsBiomesSE
+ * @apiSuccessExample {json} Success-Example:
+  [
+    {
+      "id": 250,
+      "name": "Helobioma Casanare"
+    },
+    {
+      "id": 328,
+      "name": "Hidrobioma Casanare"
+    }
+  ]
+ */
