@@ -59,8 +59,8 @@ module.exports = (errorHandler, anhAreasService) => {
    *  /anh_areas/LLA 96
    * @apiUse getAreaInfoSE
    */
-  router.get('/anh_areas/:id', errorHandler((req, res, next) => (
-    anhAreasService.getAreaInfo(req.params.id)
+  router.get('/anh_areas/:name', errorHandler((req, res, next) => (
+    anhAreasService.getAreaInfo(req.params.name)
       .then((areaInfo) => {
         res.send(areaInfo);
         next();
