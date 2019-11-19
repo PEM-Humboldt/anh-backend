@@ -33,4 +33,15 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
     )
       .then((biomes) => biomes.rows[0].collection)
   ),
+
+  /**
+   * Find all biomes inside an anh area with its corresponding area inside the block
+   *
+   * @param {String} name anh area name
+   */
+  findBiomesInfoByBlock: async (name) => (
+    geoBiomesByBlocks.query()
+      .where({ block_name: name })
+      .select('id_biome as id', 'name_biome as name', 'area_ha as area')
+  ),
 });

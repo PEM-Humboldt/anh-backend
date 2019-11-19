@@ -92,13 +92,13 @@ module.exports = (errorHandler, anhAreasService) => {
 
   /**
    * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/biomes get biomes area
+   * @api {get} /anh_areas/:name/biomes get biomes area
    * @apiName getAreaBiomes
    * @apiVersion 1.0.0
    * @apiDescription
    * Get the biomes area and percentage inside an anh area
    *
-   * @apiParam {String} id area id
+   * @apiParam {String} name area name
    *
    * @apiSuccess {Object[]} result biomes
    * @apiSuccess {Number} result.area biome area inside the area
@@ -107,9 +107,10 @@ module.exports = (errorHandler, anhAreasService) => {
    *
    * @apiExample {curl} Example usage:
    *  /anh_areas/LLA 96/biomes
+   * @apiUse getAreaBiomesSE
    */
-  router.get('/anh_areas/:id/biomes', errorHandler((req, res, next) => (
-    anhAreasService.getAreaBiomes(req.params.id)
+  router.get('/anh_areas/:name/biomes', errorHandler((req, res, next) => (
+    anhAreasService.getAreaBiomes(req.params.name)
       .then((areaBiomes) => {
         res.send(areaBiomes);
         next();
