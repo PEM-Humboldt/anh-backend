@@ -29,13 +29,17 @@ module.exports = (geoBiomesByBlocks, geoBlocks) => ({
   /**
    * Get the list of biomes information in the given area
    *
-   * @param {String} id area id
+   * @param {String} name anh area name
    */
-  getAreaBiomes: async () => ([
-    { area: 357635.0, percentage: 1, name: 'Total' },
-    { area: 2186.0, percentage: 0.006112377144295161, name: 'Zoonobioma1' },
-    { area: 137991.0, percentage: 0.38584310819690465, name: 'Zoonobioma2' },
-  ]),
+  getAreaBiomes: async (name) => {
+    const biomes = await geoBiomesByBlocks.findBiomesInfoByBlock(name);
+    const { area: totalArea } = await geoBlocks.findArea(name);
+
+    return biomes.map((biome) => ({
+      ...biome,
+      percentage: parseFloat(biome.area) / totalArea,
+    }));
+  },
 
   /**
    * Get the list of indicators associated to a given area

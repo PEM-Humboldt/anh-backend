@@ -100,3 +100,22 @@
     }
   }
  */
+
+/**
+ * @apiDefine getAreaBiomesSE
+ * @apiSuccessExample {json} Success-Example:
+  [
+    {
+      "id": 328,
+      "name": "Hidrobioma Casanare",
+      "area": "89.66000",
+      "percentage": 0.003207134172744532
+    },
+    {
+      "id": 250,
+      "name": "Helobioma Casanare",
+      "area": "27866.81000",
+      "percentage": 0.9967945420073507
+    }
+  ]
+ */

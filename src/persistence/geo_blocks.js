@@ -15,4 +15,16 @@ module.exports = ({ geoBlocks }, db) => ({
         ) as categories`))
       .then((area) => area[0])
   ),
+
+  /**
+   * Find the total area for an anh area
+   *
+   * @param {String} name anh area name
+   */
+  findArea: async (name) => (
+    geoBlocks.query()
+      .where({ block_name: name })
+      .select('area_ha as area')
+      .then((area) => area[0])
+  ),
 });
