@@ -13,7 +13,11 @@ module.exports = ({ geoBlocks }, db) => ({
           'strategic_ecosystems', has_strategic_ecosystem, 'ethnic_territories', has_ethnic_territory,
           'peasant_reserves', has_farmer_reserve, 'projects', has_infrastructure, 'ordering', has_governance
         ) as categories`))
-      .then((area) => area[0])
+      .then((area) => (area[0] ? area[0] : null))
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
+      })
   ),
 
   /**
@@ -25,7 +29,11 @@ module.exports = ({ geoBlocks }, db) => ({
     geoBlocks.query()
       .where({ block_name: name })
       .select('area_ha as area')
-      .then((area) => area[0])
+      .then((area) => (area[0] ? area[0] : null))
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
+      })
   ),
 
   /**
@@ -38,9 +46,9 @@ module.exports = ({ geoBlocks }, db) => ({
       .where({ block_name: name })
       .select(db.raw('ST_AsGeoJSON(geom)::json as geometry'))
       .then((geometry) => (geometry[0] ? geometry[0].geometry : null))
-      .catch(() => {
-        // TODO: Log error
-        throw new Error('Problem querying the database');
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
       })
   ),
 });

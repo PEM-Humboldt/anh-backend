@@ -10,7 +10,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
    *
    * @param {String} name anh area name
    */
-  getAreaInfo: async (name) => geoBlocks.findAreaInfo(name),
+  getAreaInfo: async (name) => {
+    const info = await geoBlocks.findAreaInfo(name);
+    if (info === null) throw new Error('Area doesn\'t exist');
+    return info;
+  },
 
   /**
    * Get the geometry of an area
@@ -19,7 +23,7 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
    */
   getAreaGeometry: async (name) => {
     const geom = await geoBlocks.findGeometry(name);
-    if (geom === null) throw new Error('Area doesn\'t exists or doesn\'t have a geometry');
+    if (geom === null) throw new Error('Area doesn\'t exist or doesn\'t have a geometry');
     return geom;
   },
 
@@ -28,7 +32,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
    *
    * @param {String} name anh area name
    */
-  getAreaGeometryWithBiomes: async (name) => geoBiomesByBlocks.findGeometryWithBiomes(name),
+  getAreaGeometryWithBiomes: async (name) => {
+    const geom = await geoBiomesByBlocks.findGeometryWithBiomes(name);
+    if (geom === null) throw new Error('Area doesn\'t exist or doesn\'t have a geometry');
+    return geom;
+  },
 
   /**
    * Get the list of biomes information in the given area
@@ -37,11 +45,12 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
    */
   getAreaBiomes: async (name) => {
     const biomes = await geoBiomesByBlocks.findBiomesInfoByBlock(name);
-    const { area: totalArea } = await geoBlocks.findArea(name);
+    const totalArea = await geoBlocks.findArea(name);
+    if (totalArea === null) throw new Error('Area doesn\'t exist');
 
     return biomes.map((biome) => ({
       ...biome,
-      percentage: parseFloat(biome.area) / totalArea,
+      percentage: parseFloat(biome.area) / totalArea.area,
     }));
   },
 
