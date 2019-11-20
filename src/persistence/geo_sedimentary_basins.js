@@ -5,5 +5,9 @@ module.exports = ({ geoSedimentaryBasins }) => ({
   listAllWithNameCode: async () => (
     geoSedimentaryBasins.query()
       .select('sedimentary_code as code', 'basin as name')
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 });

@@ -10,5 +10,9 @@ module.exports = ({ geoIndicatorsByBlocks }) => ({
       .where({ block_name: name })
       .whereNot({ id_biome: null })
       .distinct('id_biome as id', 'name_biome as name')
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 });
