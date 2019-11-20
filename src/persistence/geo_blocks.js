@@ -13,7 +13,11 @@ module.exports = ({ geoBlocks }, db) => ({
           'strategic_ecosystems', has_strategic_ecosystem, 'ethnic_territories', has_ethnic_territory,
           'peasant_reserves', has_farmer_reserve, 'projects', has_infrastructure, 'ordering', has_governance
         ) as categories`))
-      .then((area) => area[0])
+      .then((area) => (area[0] ? area[0] : null))
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 
   /**
@@ -25,7 +29,11 @@ module.exports = ({ geoBlocks }, db) => ({
     geoBlocks.query()
       .where({ block_name: name })
       .select('area_ha as area')
-      .then((area) => area[0])
+      .then((area) => (area[0] ? area[0] : null))
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 
   /**
