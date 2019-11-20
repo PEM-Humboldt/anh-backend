@@ -5,6 +5,10 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
   listAllBlocksWithName: async () => (
     geoBiomesByBlocks.query()
       .distinct('block_name as name')
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 
   /**
@@ -31,7 +35,11 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
       ) as fc`,
       [name],
     )
-      .then((biomes) => biomes.rows[0].collection)
+      .then((biomes) => (biomes.rows && biomes.rows[0] ? biomes.rows[0].collection : null))
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 
   /**
@@ -43,5 +51,9 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
     geoBiomesByBlocks.query()
       .where({ block_name: name })
       .select('id_biome as id', 'name_biome as name', 'area_ha as area')
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
   ),
 });

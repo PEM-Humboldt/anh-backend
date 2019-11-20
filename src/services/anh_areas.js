@@ -32,7 +32,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks) => ({
    *
    * @param {String} name anh area name
    */
-  getAreaGeometryWithBiomes: async (name) => geoBiomesByBlocks.findGeometryWithBiomes(name),
+  getAreaGeometryWithBiomes: async (name) => {
+    const geom = await geoBiomesByBlocks.findGeometryWithBiomes(name);
+    if (geom === null) throw new Error('Area doesn\'t exist or doesn\'t have a geometry');
+    return geom;
+  },
 
   /**
    * Get the list of biomes information in the given area
