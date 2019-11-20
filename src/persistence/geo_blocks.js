@@ -27,4 +27,20 @@ module.exports = ({ geoBlocks }, db) => ({
       .select('area_ha as area')
       .then((area) => area[0])
   ),
+
+  /**
+   * Find the geometry of an area
+   *
+   * @param {String} name anh area name
+   */
+  findGeometry: (name) => (
+    geoBlocks.query()
+      .where({ block_name: name })
+      .select(db.raw('ST_AsGeoJSON(geom)::json as geometry'))
+      .then((geometry) => (geometry[0] ? geometry[0].geometry : null))
+      .catch(() => {
+        // TODO: Log error
+        throw new Error('Problem querying the database');
+      })
+  ),
 });
