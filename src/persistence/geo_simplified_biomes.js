@@ -10,9 +10,9 @@ module.exports = ({ geoSimplifiedBiomes }, db) => ({
       .where({ id_biome: id })
       .select(db.raw('ST_AsGeoJSON(geom)::json as geometry'))
       .then((geometry) => (geometry[0] ? geometry[0].geometry : null))
-      .catch(() => {
-        // TODO: Log error
-        throw new Error('Problem querying the database');
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
       })
   ),
 });
