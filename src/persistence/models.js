@@ -29,6 +29,9 @@ const geoSimplifiedBiomes = connection.model('geoSimplifiedBiomes', {
 const geoBlocks = connection.model('geoBlocks', {
   tableName: 'anh.geo_blocks',
 });
+const indicatorsCatalog = connection.model('indicatorsCatalog', {
+  tableName: 'anh.indicators_catalog',
+});
 const geoIndicatorsByBlocks = connection.model('geoIndicatorsByBlocks', {
   tableName: 'anh.geo_indicators_by_blocks',
 });
@@ -40,6 +43,7 @@ module.exports = [
     geoSimplifiedBiomes,
     geoBlocks,
     geoIndicatorsByBlocks,
+    indicatorsCatalog,
   },
   connection.knex,
 ];
