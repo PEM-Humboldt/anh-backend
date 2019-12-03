@@ -29,6 +29,7 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
           INNER JOIN (
             SELECT gbbb.gid, gbbb.id_biome, gbbb.name_biome, gbbb.area_ha, gbbb.compensation_factor
             FROM anh.geo_biomes_by_blocks as gbbb
+            ORDER BY gbbb.area_ha DESC
           ) as gbbb2 ON gbbb2.gid = gbbb1.gid
           WHERE gbbb1.block_name = ?
         ) as f
@@ -51,6 +52,7 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
     geoBiomesByBlocks.query()
       .where({ block_name: name })
       .select('id_biome as id', 'name_biome as name', 'area_ha as area')
+      .orderBy('area', 'desc')
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
         throw customErr;
