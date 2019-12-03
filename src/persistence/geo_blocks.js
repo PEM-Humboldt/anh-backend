@@ -11,7 +11,8 @@ module.exports = ({ geoBlocks }, db) => ({
         db.raw(`json_build_object(
           'protected_areas', has_protected_area, 'forest_reserves', has_forestal_reserve,
           'strategic_ecosystems', has_strategic_ecosystem, 'ethnic_territories', has_ethnic_territory,
-          'peasant_reserves', has_farmer_reserve, 'projects', has_infrastructure, 'ordering', has_governance
+          'peasant_reserves', has_farmer_reserve, 'projects', has_infrastructure, 'ordering', has_governance,
+          'international', has_international_degree, 'license', has_licences, 'vulnerability', vulnerability_index
         ) as categories`))
       .then((area) => (area[0] ? area[0] : null))
       .catch((error) => {
