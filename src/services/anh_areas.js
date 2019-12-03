@@ -1,9 +1,26 @@
 module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicatorsCatalog) => {
   /**
+   * I did not find a way to group these values, the grouping in the database should be handled
+   * differently since it's not being used for anything else
+   *
+   * Given an indicator id return the group it belongs.
+   *
+   * @param {Number} id indicator id
+  */
+  const indicatorGroup = (id) => {
+    if ([3, 6, 9].includes(id)) return '5km';
+    if ([4, 7, 10].includes(id)) return '15km';
+    if ([5, 8, 11].includes(id)) return '25km';
+    return null;
+  };
+
+  /**
    * Get values for a set of identifiers depending on the code passed. Codes:
    * 1 - Get name_biome, indicator_value, value_description and year for the largest biome in the
    * block (in the last year)
-   * 2 - // To be defined
+   * 2 - Get id, id_indicator, indicator_value, value_description grouped according to
+   * indicatorGroup function. If new indicators of this form are inserted in the database,
+   * it's necessary to modify that function
    * 3 - Get id, id_indicator, indicator_value, value_description grouped by indicator
    * 4 - Get id, id_indicator, indicator_value, value_description
    *
@@ -16,8 +33,15 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
       const biome = await geoIndicatorsByBlocks.getLargestBiomeInLastYear(blockName, indicatorIds);
       return geoIndicatorsByBlocks.getValuesByBiome(blockName, indicatorIds, biome[0].id_biome);
     } if (code === 2) {
-      // TODO implement when defined how to group values
-      return [];
+      const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
+      const result = {};
+      values.forEach((item) => {
+        if (!result[indicatorGroup(item.id_indicator)]) {
+          result[indicatorGroup(item.id_indicator)] = [];
+        }
+        result[indicatorGroup(item.id_indicator)].push(item);
+      });
+      return result;
     } if (code === 3) {
       const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
       const groups = {};
