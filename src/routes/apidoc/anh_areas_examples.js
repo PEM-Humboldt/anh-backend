@@ -96,7 +96,10 @@
       "ethnic_territories": null,
       "peasant_reserves": null,
       "projects": null,
-      "ordering": null
+      "ordering": null,
+      "international": null,
+      "license": null,
+      "vulnerability": 0.55
     }
   }
  */
