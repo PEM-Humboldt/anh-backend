@@ -200,3 +200,50 @@
     ]
   }
  */
+
+/**
+ * @apiDefine getAreaIndicatorsSE
+ * @apiSuccessExample {json} Success-Example:
+  [
+    {
+      "code": 1,
+      "name": "Hectareas de Bosque Natural y Secundaria para cada año por Bioma",
+      "topic": "Riesgo para Biodiversidad",
+      "ids": [
+        {
+          "id": 1,
+          "name": "Cálculo de área en hectáreas de bosque Natural (N) para cada año por Bioma"
+        },
+        {
+          "id": 2,
+          "name": "Cálculo de área en hectáreas de bosque Secundario(S) para cada año por Bioma"
+        }
+      ],
+      "values": [
+        {
+          "name_biome": "Helobioma Casanare",
+          "indicator_value": "21897.30000",
+          "value_description": "Natural",
+          "year": 2002
+        },
+        {
+          "name_biome": "Helobioma Casanare",
+          "indicator_value": "1403.32000",
+          "value_description": "Secundaria",
+          "year": 2002
+        }
+      ]
+    },
+    {
+      "code": 2,
+      "name": "Areas Protegidas a 5, 15 y 25 km del borde del bloque de exploración",
+      "topic": "Riesgo para Biodiversidad",
+      "ids": [
+        {
+          "id": 3,
+          "name": "Superficie en áreas protegidas a 5 Km del borde del bloque de exploración"
+        },...
+      ]...
+    }
+  ]
+ */

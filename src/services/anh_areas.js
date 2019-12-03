@@ -34,6 +34,21 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
     return [];
   };
 
+  /**
+   * Depending on the code the group of indicators has a size
+   *
+   * @param {Number} code
+   */
+  const getSize = (code) => {
+    switch (code) {
+      case 1: return 2;
+      case 2: return 3;
+      case 3: return 2;
+      case 4: return 1;
+      default: return 1;
+    }
+  };
+
   return {
     /**
      * Get all anh areas basic information: name
@@ -99,24 +114,30 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
       const catalog = await indicatorsCatalog.findIndicatorsByBlock(name);
 
       const groups = {};
+      const topics = new Set();
       catalog.forEach((elem) => {
         if (!groups[elem.code_label]) {
           groups[elem.code_label] = {
             code: elem.code,
+            size: getSize(elem.code),
             name: elem.code_label,
-            topic: elem.topic,
+            topics: elem.topic.split(',').map((topic) => topic.trim()),
             ids: [],
           };
+          groups[elem.code_label].topics.forEach((topic) => topics.add(topic));
         }
         groups[elem.code_label].ids.push({ id: elem.id, name: elem.indicator_name });
       });
 
-      const results = Object.values(groups).map(async (obj) => {
-        const indicatorIds = obj.ids.map((item) => item.id);
-        const values = await getDashValues(obj.code, name, indicatorIds);
-        return { ...obj, values };
-      });
-      return Promise.all(results);
+      const indicators = await Promise.all(
+        Object.values(groups).map(async (obj) => {
+          const indicatorIds = obj.ids.map((item) => item.id);
+          const values = await getDashValues(obj.code, name, indicatorIds);
+          return { ...obj, values };
+        }),
+      );
+
+      return { topics: Array.from(topics), indicators };
     },
 
     /**
