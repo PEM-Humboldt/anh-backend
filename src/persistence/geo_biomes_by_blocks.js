@@ -51,7 +51,7 @@ module.exports = ({ geoBiomesByBlocks }, db) => ({
   findBiomesInfoByBlock: async (name) => (
     geoBiomesByBlocks.query()
       .where({ block_name: name })
-      .select('id_biome as id', 'name_biome as name', 'area_ha as area')
+      .select('id_biome as id', 'name_biome as name', 'area_ha as area', 'compensation_factor')
       .orderBy('area', 'desc')
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
