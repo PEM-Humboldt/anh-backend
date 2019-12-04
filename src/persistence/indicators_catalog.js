@@ -16,4 +16,19 @@ module.exports = ({ indicatorsCatalog }) => ({
         throw customErr;
       })
   ),
+
+  /**
+   * Find information for the given indicators
+   *
+   * @param {Number} ids indicators ids
+   */
+  findIndicatorsByIds: (ids) => (
+    indicatorsCatalog.query()
+      .whereIn('id', ids)
+      .select('id', 'indicator_name', 'code')
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
+      })
+  ),
 });

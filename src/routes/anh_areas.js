@@ -158,63 +158,21 @@ module.exports = (errorHandler, anhAreasService) => {
    *  /anh_areas/LLA 96/indicators
    * @apiUse getAreaIndicatorsSE
    */
-  router.get('/anh_areas/:name/indicators', errorHandler((req, res, next) => (
-    anhAreasService.getAreaIndicators(req.params.name)
+  router.get('/anh_areas/:name/indicators', errorHandler((req, res, next) => {
+    if (req.params.ids) {
+      const indicatorsIds = req.params.ids.map((id) => parseInt(id, 10));
+      return anhAreasService.getAreaIndicatorsByIds(req.params.name, indicatorsIds)
+        .then((areaIndicators) => {
+          res.send(areaIndicators);
+          next();
+        });
+    }
+    return anhAreasService.getAreaIndicators(req.params.name)
       .then((areaIndicators) => {
         res.send(areaIndicators);
         next();
-      })
-  )));
-
-  /**
-   * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/indicators/biomes list biomes with indicators inside area
-   * @apiName listAreaIndicatorsBiomes
-   * @apiVersion 1.0.0
-   * @apiDescription
-   * Get the list of biomes inside the anh area with indicators information
-   *
-   * @apiParam {String} name anh area name
-   *
-   * @apiSuccess {Object[]} result Array with biomes indicators objects
-   * @apiSuccess {Number} result.id biome id
-   * @apiSuccess {String} result.name biome name
-   *
-   * @apiExample {curl} Example usage:
-   *  /anh_areas/LLA 96/indicators/biomes
-   * @apiUse listAreaIndicatorsBiomesSE
-   */
-  router.get('/anh_areas/:name/indicators/biomes', errorHandler((req, res, next) => (
-    anhAreasService.listAreaIndicatorsBiomes(req.params.name)
-      .then((indicatorsBiomes) => {
-        res.send(indicatorsBiomes);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup anh_areas
-   * @api {get} /anh_areas/:id/indicators/biomes/:id get indicators for biome inside area
-   * @apiName getAreaBiomeIndicators
-   * @apiVersion 1.0.0
-   * @apiDescription
-   * Get the list of indicators related with a biome inside the anh area
-   *
-   * @apiParam {String} id area id
-   * @apiParam {Number} biome_id biome id
-   *
-   * @apiSuccess {Object[]} result Array with indicators objects
-   *
-   * @apiExample {curl} Example usage:
-   *  /anh_areas/LLA 96/indicators/biomes/1
-   */
-  router.get('/anh_areas/:id/indicators/biomes/:biome_id', errorHandler((req, res, next) => (
-    anhAreasService.getBiomeIndicatorsInArea(req.params.id, req.params.biome_id)
-      .then((indicators) => {
-        res.send(indicators);
-        next();
-      })
-  )));
+      });
+  }));
 
   /**
    * @apiGroup anh_areas
