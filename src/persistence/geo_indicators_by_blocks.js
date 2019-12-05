@@ -44,16 +44,20 @@ module.exports = ({ geoIndicatorsByBlocks }) => ({
    * @param {Number[]} ids indicators ids
    * @param {Number} biomeId biome id
    */
-  getValuesByBiome: (name, ids, biomeId) => (
-    geoIndicatorsByBlocks.query()
-      .where({ block_name: name, id_biome: biomeId })
+  getValuesByBiome: (name, ids, biomeId = null) => {
+    const where = { block_name: name };
+    if (biomeId) {
+      where.id_biome = biomeId;
+    }
+    return geoIndicatorsByBlocks.query()
+      .where(where)
       .whereIn('id_indicator', ids)
-      .select('name_biome', 'indicator_value', 'value_description', 'year')
+      .select('gid as id', 'id_indicator', 'name_biome', 'id_biome', 'indicator_value', 'value_description', 'year')
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
         throw customErr;
-      })
-  ),
+      });
+  },
 
   /**
    * Find the value - description for the given indicators and block name

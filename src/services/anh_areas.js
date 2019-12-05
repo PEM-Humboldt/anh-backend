@@ -16,8 +16,8 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
 
   /**
    * Get values for a set of identifiers depending on the code passed. Codes:
-   * 1 - Get name_biome, indicator_value, value_description and year for the largest biome in the
-   * block (in the last year)
+   * 1 - Get id, id_indicator, name_biome, indicator_value, value_description and year grouped by
+   * biomes
    * 2 - Get id, id_indicator, indicator_value, value_description grouped according to
    * indicatorGroup function. If new indicators of this form are inserted in the database,
    * it's necessary to modify that function
@@ -28,10 +28,18 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
    * @param {String} blockName anh area name
    * @param {Number[]} indicatorIds Indicators ids to select
    */
-  const getDashValues = async (code, blockName, indicatorIds) => {
+  const getFullValues = async (code, blockName, indicatorIds) => {
     if (code === 1) {
-      const biome = await geoIndicatorsByBlocks.getLargestBiomeInLastYear(blockName, indicatorIds);
-      return geoIndicatorsByBlocks.getValuesByBiome(blockName, indicatorIds, biome[0].id_biome);
+      const values = await geoIndicatorsByBlocks.getValuesByBiome(blockName, indicatorIds);
+      const result = { biomes: [], values: {} };
+      values.forEach((item) => {
+        if (!result.values[item.id_biome]) {
+          result.values[item.id_biome] = [];
+          result.biomes.push({ id: item.id_biome, name: item.name_biome });
+        }
+        result.values[item.id_biome].push(item);
+      });
+      return result;
     } if (code === 2) {
       const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
       const result = {};
@@ -41,7 +49,7 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         }
         result[indicatorGroup(item.id_indicator)].push(item);
       });
-      return result;
+      return { values: result };
     } if (code === 3) {
       const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
       const groups = {};
@@ -51,9 +59,34 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         }
         groups[item.id_indicator].push(item);
       });
-      return Object.values(groups);
+      return { values: groups };
     } if (code === 4) {
-      return geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
+      return { values: await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds) };
+    }
+    return { values: [] };
+  };
+
+  /**
+   * Get values for a set of identifiers depending on the code passed. Codes:
+   * 1 - Get name_biome, indicator_value, value_description and year for the largest biome in the
+   * block (in the last year)
+   * 2 - Same as getFullValues
+   * 3 - Same as getFullValues
+   * 4 - Same as getFullValues
+   *
+   * @param {Number} code identifier to filter attributes to bring
+   * @param {String} blockName anh area name
+   * @param {Number[]} indicatorIds Indicators ids to select
+   */
+  const getDashValues = async (code, blockName, indicatorIds) => {
+    if (code === 1) {
+      const biome = await geoIndicatorsByBlocks.getLargestBiomeInLastYear(blockName, indicatorIds);
+      const biomeId = biome[0].id_biome;
+      return {
+        values: await geoIndicatorsByBlocks.getValuesByBiome(blockName, indicatorIds, biomeId),
+      };
+    } if (code === 2 || code === 3 || code === 4) {
+      return getFullValues(code, blockName, indicatorIds);
     }
     return [];
   };
@@ -157,7 +190,7 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         Object.values(groups).map(async (obj) => {
           const indicatorIds = obj.ids.map((item) => item.id);
           const values = await getDashValues(obj.code, name, indicatorIds);
-          return { ...obj, values };
+          return { ...obj, ...values };
         }),
       );
 
@@ -165,86 +198,29 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
     },
 
     /**
-     * List biomes information inside an area that have indicators
+     * Get indicators values for the given indicators ids
+     * Note that only the first indicator id will be used to calculate the type of response,
+     * that is the code will be get from that id
      *
      * @param {String} name anh area name
+     * @param {Number[]} indicatorsIds indictors ids
      */
-    listAreaIndicatorsBiomes: async (name) => (
-      geoIndicatorsByBlocks.findBiomesWithIndicatorsByBlock(name)
-    ),
+    getAreaIndicatorsByIds: async (name, indicatorsIds) => {
+      if (indicatorsIds.includes(NaN)) {
+        throw new Error('Not all indicator ids are numbers');
+      }
 
-    /**
-     * Get the list of indicators associated to a given biome inside a given area
-     *
-     * @param {String} id area id
-     * @param {Number} biomeId biome id
-     */
-    getBiomeIndicatorsInArea: async () => ([
-      {
-        id: 'ai1',
-        typeName: 'Indicator 1',
-        typeId: 'ind1',
-        size: '1',
-        group: ['costo'],
-        values: [1, 4, 6],
-      },
-      {
-        id: 'ai2',
-        typeId: 'ind2',
-        typeName: 'Indicator 2',
-        size: '2',
-        group: ['riesgo'],
-        values: [1, 4, 6],
-      },
-      {
-        id: 'ai3',
-        typeId: 'ind3',
-        typeName: 'Indicator 3',
-        size: '3',
-        group: ['costo', 'monitoreo'],
-        values: [9, 5],
-      },
-      {
-        id: 'ai4',
-        typeId: 'ind4',
-        typeName: 'Indicator 4',
-        size: '1',
-        group: ['riesgo', 'monitoreo'],
-        values: [9, 2],
-      },
-      {
-        id: 'ai7',
-        typeId: 'ind7',
-        typeName: 'Indicator 7',
-        size: '2',
-        group: ['monitoreo', 'costo'],
-        values: [1, 2],
-      },
-      {
-        id: 'ai8',
-        typeId: 'ind8',
-        typeName: 'Indicator 8',
-        size: '1',
-        group: ['riesgo', 'bioma'],
-        values: [0, 2],
-      },
-      {
-        id: 'ai9',
-        typeId: 'ind9',
-        typeName: 'Indicator 9',
-        size: '1',
-        group: ['bioma', 'monitoreo', 'oportunidad'],
-        values: [9, 4, 3],
-      },
-      {
-        id: 'ai11',
-        typeId: 'ind11',
-        typeName: 'Indicator 11',
-        size: '1',
-        group: ['monitoreo', 'oportunidad'],
-        values: [7, 4],
-      },
-    ]),
+      const catalog = await indicatorsCatalog.findIndicatorsByIds(indicatorsIds);
+      if (catalog.length <= 0) throw new Error('Indicators don\'t exist');
+
+      const indicators = catalog.map((elem) => ({
+        id: elem.id,
+        name: elem.indicator_name,
+      }));
+
+      const values = await getFullValues(catalog[0].code, name, indicatorsIds);
+      return { indicators, ...values };
+    },
 
     /**
      * Get the geometry of an indicator (if there is one)

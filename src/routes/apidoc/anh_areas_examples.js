@@ -124,21 +124,6 @@
  */
 
 /**
- * @apiDefine listAreaIndicatorsBiomesSE
- * @apiSuccessExample {json} Success-Example:
-  [
-    {
-      "id": 250,
-      "name": "Helobioma Casanare"
-    },
-    {
-      "id": 328,
-      "name": "Hidrobioma Casanare"
-    }
-  ]
- */
-
-/**
  * @apiDefine getAreaGeometrySE
  * @apiSuccessExample {json} Success-Example:
   {
@@ -206,7 +191,7 @@
 
 /**
  * @apiDefine getAreaIndicatorsSE
- * @apiSuccessExample {json} Success-Example:
+ * @apiSuccessExample {json} Without ids Success-Example:
   [
     {
       "code": 1,
