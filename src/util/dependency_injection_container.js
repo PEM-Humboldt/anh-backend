@@ -41,7 +41,10 @@ bottle.factory('sedimentaryBasinsService', (container) => (
   sedimentaryBasinsService(container.geoSedimentaryBasinsPersistence)
 ));
 bottle.factory('indicatorsService', (container) => (
-  indicatorsService(container.geoIndicatorsByBlocksPersistence)
+  indicatorsService(
+    container.geoIndicatorsByBlocksPersistence,
+    container.indicatorsCatalogPersistence,
+  )
 ));
 
 bottle.factory('routes', (container) => ([

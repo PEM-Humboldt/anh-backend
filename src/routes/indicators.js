@@ -10,21 +10,22 @@ module.exports = (errorHandler, indicatorsService) => {
 
   /**
    * @apiGroup indicators
-   * @api {get} /indicators/:type_id/metadata get metadata
+   * @api {get} /indicators/:id/metadata get metadata
    * @apiName getIndicatorMetadata
    * @apiVersion 1.0.0
    * @apiDescription
    * Get metadata information about a type of indicator.
    *
-   * @apiParam {String} type_id indicator type id
+   * @apiParam {String} id indicator type id
    *
    * @apiSuccess {Object} result
    *
    * @apiExample {curl} Example usage:
-   *  /indicators/:type_id/metadata
+   *  /indicators/1/metadata
+   * @apiUse getIndicatorMetadataSE
    */
-  router.get('/indicators/:type_id/metadata', errorHandler((req, res, next) => (
-    indicatorsService.getMetadata(req.params.type_id)
+  router.get('/indicators/:id/metadata', errorHandler((req, res, next) => (
+    indicatorsService.getMetadata(req.params.id)
       .then((metadata) => {
         res.send(metadata);
         next();
@@ -33,11 +34,11 @@ module.exports = (errorHandler, indicatorsService) => {
 
   /**
    * @apiGroup indicators
-   * @api {get} /indicators/geometry get geometries for a set od indicators
+   * @api {get} /indicators/geometry get indicators geometries
    * @apiName getIndicatorsGeometries
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get a GeoJson object with the geometries of the given indicators
+   * Get a GeoJson object with the geometries for a given set of indicators
    *
    * @apiParam {String} type_id indicator type id
    * @apiParam {Number[]} ids query param to indicate which indicators get in the request

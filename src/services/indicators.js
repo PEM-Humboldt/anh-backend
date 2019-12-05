@@ -1,16 +1,11 @@
-module.exports = (geoIndicatorsByBlocks) => ({
+module.exports = (geoIndicatorsByBlocks, indicatorsCatalog) => ({
 
   /**
    * Get metadata information about a given indicator
    *
-   * @param {string} typeId area id
+   * @param {string} id indicator id
    */
-  getMetadata: async (typeId) => ({
-    id: typeId,
-    name: 'test Indicator name',
-    is_geographic: false,
-    metadata: 'Explanation?',
-  }),
+  getMetadata: (id) => indicatorsCatalog.findMetadata(id),
 
   /**
    * Get the geometry for a given set of values
