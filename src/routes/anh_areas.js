@@ -161,7 +161,12 @@ module.exports = (errorHandler, anhAreasService) => {
    */
   router.get('/anh_areas/:name/indicators', errorHandler((req, res, next) => {
     if (req.params.ids) {
-      const indicatorsIds = req.params.ids.map((id) => parseInt(id, 10));
+      let indicatorsIds = [];
+      if (typeof req.params.ids === 'string') {
+        indicatorsIds = [parseInt(req.params.ids, 10)];
+      } else {
+        indicatorsIds = req.params.ids.map((id) => parseInt(id, 10));
+      }
       return anhAreasService.getAreaIndicatorsByIds(req.params.name, indicatorsIds)
         .then((areaIndicators) => {
           res.send(areaIndicators);

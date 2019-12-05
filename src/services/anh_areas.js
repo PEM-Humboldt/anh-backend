@@ -59,9 +59,9 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         }
         groups[item.id_indicator].push(item);
       });
-      return { values: Object.values(groups) };
+      return { values: groups };
     } if (code === 4) {
-      return { values: geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds)};
+      return { values: await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds) };
     }
     return { values: [] };
   };
