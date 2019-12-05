@@ -53,6 +53,7 @@ module.exports = ({ geoIndicatorsByBlocks }) => ({
       .where(where)
       .whereIn('id_indicator', ids)
       .select('gid as id', 'id_indicator', 'name_biome', 'id_biome', 'indicator_value', 'value_description', 'year')
+      .orderBy([{ column: 'indicator_value', order: 'desc' }, { column: 'year', order: 'desc' }])
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
         throw customErr;
