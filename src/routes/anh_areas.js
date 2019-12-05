@@ -151,8 +151,9 @@ module.exports = (errorHandler, anhAreasService) => {
    * Get the list of indicators information associated to an area
    *
    * @apiParam {String} name area name
+   * @apiParam {Number[]} [ids] query param to indicate which indicators get in the request
    *
-   * @apiSuccess {Object[]} result Array with indicators objects
+   * @apiUse getAreaIndicatorsResponse
    *
    * @apiExample {curl} Example usage:
    *  /anh_areas/LLA 96/indicators
