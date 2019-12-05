@@ -1,4 +1,4 @@
-module.exports = ({ geoIndicatorsByBlocks }) => ({
+module.exports = ({ geoIndicatorsByBlocks }, db) => ({
 
   /**
    * Find the biomes inside a block that have indicators
@@ -71,6 +71,38 @@ module.exports = ({ geoIndicatorsByBlocks }) => ({
       .where({ block_name: name })
       .whereIn('id_indicator', ids)
       .select('gid as id', 'id_indicator', 'indicator_value', 'value_description')
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
+      })
+  ),
+
+  /**
+   * Find the geometry for a set of ids
+   *
+   * @param {Number[]} ids indicator values to get in the geometry
+   */
+  getGeometriesByIds: (ids) => (
+    db.raw(
+      `SELECT row_to_json(fc) as collection
+      FROM (
+        SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+        FROM(
+          SELECT 'Feature' as type,
+            row_to_json(properties) as properties,
+            ST_AsGeoJSON(geom)::json as geometry
+          FROM anh.geo_indicators_by_blocks as gibb1
+          INNER JOIN (
+            SELECT gibb.gid, gibb.id_indicator, ic.indicator_name, gibb.indicator_value, gibb.value_description
+            FROM anh.geo_indicators_by_blocks as gibb
+            INNER JOIN anh.indicators_catalog as ic ON ic.id = gibb.id_indicator
+          ) as properties ON properties.gid = gibb1.gid
+          WHERE properties.gid IN (${ids.map(() => '?').join(',')})
+        ) as f
+      ) as fc`,
+      [...ids],
+    )
+      .then((geom) => (geom.rows && geom.rows[0] ? geom.rows[0].collection : null))
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
         throw customErr;

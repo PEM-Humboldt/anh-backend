@@ -26,7 +26,7 @@ bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 bottle.factory('geoBiomesByBlocksPersistence', () => geoBiomesByBlocksPersistence(models, db));
 bottle.factory('geoSedimentaryBasinsPersistence', () => geoSedimentaryBasinsPersistence(models));
 bottle.factory('geoBlocksPersistence', () => geoBlocksPersistence(models, db));
-bottle.factory('geoIndicatorsByBlocksPersistence', () => geoIndicatorsByBlocksPersistence(models));
+bottle.factory('geoIndicatorsByBlocksPersistence', () => geoIndicatorsByBlocksPersistence(models, db));
 bottle.factory('indicatorsCatalogPersistence', () => indicatorsCatalogPersistence(models));
 
 bottle.factory('anhAreasService', (container) => (
@@ -40,7 +40,9 @@ bottle.factory('anhAreasService', (container) => (
 bottle.factory('sedimentaryBasinsService', (container) => (
   sedimentaryBasinsService(container.geoSedimentaryBasinsPersistence)
 ));
-bottle.factory('indicatorsService', () => indicatorsService());
+bottle.factory('indicatorsService', (container) => (
+  indicatorsService(container.geoIndicatorsByBlocksPersistence)
+));
 
 bottle.factory('routes', (container) => ([
   anhAreasRoute(container.errorHandler, container.anhAreasService),
