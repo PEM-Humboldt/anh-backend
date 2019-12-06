@@ -1,4 +1,4 @@
-module.exports = () => ({
+module.exports = (geoIndicatorsByBlocks) => ({
 
   /**
    * Get metadata information about a given indicator
@@ -11,4 +11,11 @@ module.exports = () => ({
     is_geographic: false,
     metadata: 'Explanation?',
   }),
+
+  /**
+   * Get the geometry for a given set of values
+   *
+   * @param {Number[]} indicator values ids to get
+   */
+  getGeometries: (ids) => geoIndicatorsByBlocks.getGeometriesByIds(ids),
 });
