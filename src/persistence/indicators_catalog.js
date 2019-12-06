@@ -31,4 +31,20 @@ module.exports = ({ indicatorsCatalog }) => ({
         throw customErr;
       })
   ),
+
+  /**
+   * Get the metadata for a given indicator
+   *
+   * @param {Number} id indicator id
+   */
+  findMetadata: (id) => (
+    indicatorsCatalog.query()
+      .where({ id })
+      .select('metadata')
+      .then((metadata) => (metadata[0] ? metadata[0] : null))
+      .catch((error) => {
+        const customErr = { origin: error, userMsg: 'Problem querying the database' };
+        throw customErr;
+      })
+  ),
 });
