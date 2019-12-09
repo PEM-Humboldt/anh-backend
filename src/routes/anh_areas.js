@@ -157,6 +157,7 @@ module.exports = (errorHandler, anhAreasService) => {
    *
    * @apiExample {curl} Example usage:
    *  /anh_areas/LLA 96/indicators
+   *  /anh_areas/LLA 96/indicators?ids=3289&ids=3501
    * @apiUse getAreaIndicatorsSE
    */
   router.get('/anh_areas/:name/indicators', errorHandler((req, res, next) => {
