@@ -148,7 +148,8 @@ module.exports = (errorHandler, anhAreasService) => {
    * @apiName getAreaIndicators
    * @apiVersion 1.0.0
    * @apiDescription
-   * Get the list of indicators information associated to an area
+   * Get the list of indicators information associated to an area. When param "ids" is passed and
+   * those ids have code 1 the list of biomes is sorted descending
    *
    * @apiParam {String} name area name
    * @apiParam {Number[]} [ids] query param to indicate which indicators get in the request

@@ -219,7 +219,12 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
       }));
 
       const values = await getFullValues(catalog[0].code, name, indicatorsIds);
-      return { indicators, ...values };
+      return {
+        code: catalog[0].code,
+        group_name: catalog[0].code_label,
+        indicators,
+        ...values,
+      };
     },
   };
 };

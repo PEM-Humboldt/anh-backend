@@ -71,8 +71,3 @@
  * @apiSuccess (with ids - codes 2, 3, 4) {Object[]} result.values Same structure and values as the
  * request without ids
 */
-
-/**
- * @apiDefine withIdsGroup ( )
- * The response is the same as the "valueS" attribute in the responses without ids
- */

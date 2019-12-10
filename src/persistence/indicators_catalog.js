@@ -25,7 +25,7 @@ module.exports = ({ indicatorsCatalog }) => ({
   findIndicatorsByIds: (ids) => (
     indicatorsCatalog.query()
       .whereIn('id', ids)
-      .select('id', 'indicator_name', 'code')
+      .select('id', 'indicator_name', 'code', 'code_label')
       .catch((error) => {
         const customErr = { origin: error, userMsg: 'Problem querying the database' };
         throw customErr;
