@@ -1,0 +1,13 @@
+version: '3'
+services:
+  anh_backend:
+    build: .
+    image: anh-backend:1.0.0
+    container_name: anh-backend
+    environment:
+      - NODE_CONFIG_ENV=production
+    volumes:
+      - ./config/production.json:/home/node/app/config/production.json
+    ports:
+      - "4500:4000"
+    restart: always
