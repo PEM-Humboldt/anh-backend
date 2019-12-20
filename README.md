@@ -15,6 +15,16 @@ By default **NODE_CONFIG_ENV** is *develop*, so you'll need to create *config/de
 ### Run
 Run `npm start` to start the server, this will launch nodemon ready to watch your changes.
 
+### Deploy
+To deploy you need Docker v18.09+ and docker-compose v1.22+
+
+* Build image
+
+  `docker-compose build --no-cache`
+* Start container
+
+  `docker-compose up -d`
+
 ## Tests
 There are no tests currently.
 
