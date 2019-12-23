@@ -196,7 +196,7 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         Object.values(groups).map(async (obj) => {
           const indicatorIds = obj.ids.map((item) => item.id);
           const values = await getDashValues(obj.code, name, indicatorIds);
-          if (values.length === 0) return null;
+          if (values.values.length === 0) return null;
           return { ...obj, ...values };
         }),
       );
