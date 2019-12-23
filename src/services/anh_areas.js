@@ -41,14 +41,20 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
       });
       return result;
     } if (code === 2) {
+      let hasRequired = false;
       const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
       const result = {};
       values.forEach((item) => {
+        if (!hasRequired
+          && (item.id_indicator === 3 || item.id_indicator === 4 || item.id_indicator === 5)) {
+          hasRequired = true;
+        }
         if (!result[indicatorGroup(item.id_indicator)]) {
           result[indicatorGroup(item.id_indicator)] = [];
         }
         result[indicatorGroup(item.id_indicator)].push(item);
       });
+      if (!hasRequired) return { values: [] };
       return { values: result };
     } if (code === 3) {
       const values = await geoIndicatorsByBlocks.getValueDescription(blockName, indicatorIds);
@@ -190,10 +196,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
         Object.values(groups).map(async (obj) => {
           const indicatorIds = obj.ids.map((item) => item.id);
           const values = await getDashValues(obj.code, name, indicatorIds);
+          if (values.length === 0) return null;
           return { ...obj, ...values };
         }),
       );
-
+      indicators.splice(indicators.findIndex((i) => i === null), 1);
       return { topics: Array.from(topics), indicators };
     },
 
