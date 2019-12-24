@@ -175,7 +175,6 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
      */
     getAreaIndicators: async (name) => {
       const catalog = await indicatorsCatalog.findIndicatorsByBlock(name);
-
       const groups = {};
       const topics = new Set();
       catalog.forEach((elem) => {
@@ -200,7 +199,11 @@ module.exports = (geoBiomesByBlocks, geoBlocks, geoIndicatorsByBlocks, indicator
           return { ...obj, ...values };
         }),
       );
-      indicators.splice(indicators.findIndex((i) => i === null), 1);
+
+      const idx = indicators.findIndex((i) => i === null);
+      if (idx > -1) {
+        indicators.splice(idx, 1);
+      }
       return { topics: Array.from(topics), indicators };
     },
 

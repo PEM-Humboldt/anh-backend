@@ -2,8 +2,8 @@ version: '3'
 services:
   anh_backend:
     build: .
-    image: anh-backend:1.1.0
-    container_name: anh-backend
+    image: anh-backend:1.1.2
+    container_name: anh-backend-1.1.2
     environment:
       - NODE_CONFIG_ENV=production
     volumes:
